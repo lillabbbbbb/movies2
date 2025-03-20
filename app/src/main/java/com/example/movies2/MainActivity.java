@@ -10,12 +10,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     //app components
-    private TextView viewTitle;
-    private RecyclerView recyclerView;
-
+    ArrayList<Movie> movieDetailModels = new ArrayList<>();
+    TextView viewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewTitle = findViewById(R.id.textView);
-        recyclerView.findViewById(R.id.recyclerView);
 
 
         //read and parse json file
-
+        movieDetailModels =
 
         //turn it into displayable list through the CustomAdapter
 
