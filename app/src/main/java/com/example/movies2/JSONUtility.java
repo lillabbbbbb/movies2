@@ -28,6 +28,7 @@ public class JSONUtility {
                         variables[i] = obj.getString(headers[i]);
                     }catch(Exception e){
                         e.printStackTrace();
+                        variables[i] = null;
                     }
                 }
 

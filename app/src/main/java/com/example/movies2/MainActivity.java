@@ -15,8 +15,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     //app components
-    ArrayList<Movie> movieDetailModels = new ArrayList<>();
+    ArrayList<Movie> movies = new ArrayList<>();
     TextView viewTitle;
+    private final String JSON_FILE = "./assets/movies.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //read and parse json file
-        movieDetailModels =
+        movies = JSONUtility.parse(JSON_FILE);
 
         //turn it into displayable list through the CustomAdapter
 
