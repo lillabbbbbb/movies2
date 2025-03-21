@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //app components
+    //global variables for the app components
     ArrayList<Movie> movies = new ArrayList<>();
     TextView viewTitle;
     private final String JSON_FILE = "movies.json";
@@ -31,15 +31,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        //connect UI components to Java variables
         viewTitle = findViewById(R.id.textView);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
 
         //read and parseOnlyAllDetails json file
         String json = JSONUtility.readJSONFromAssets(this, JSON_FILE);
         movies = JSONUtility.parseWithMissingDetails(json);
 
 
-        //turn it into displayable list through the CustomAdapter
+
+        //turn it into displayable list with the CustomAdapter
         CustomAdapter adapter = new CustomAdapter(this, movies);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

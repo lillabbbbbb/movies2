@@ -12,6 +12,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void jsonReading_isWorking() {
-        System.out.println("Hello World");
+
     }
 }

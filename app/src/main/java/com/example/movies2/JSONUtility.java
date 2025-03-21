@@ -6,6 +6,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -28,8 +30,12 @@ public class JSONUtility {
             inputStream.close();
 
             json = new String(buffer, StandardCharsets.UTF_8);
-        }catch(IOException e){
-            e.printStackTrace();
+        }catch(FileNotFoundException e){
+            //error message logged to the LogCat
+            Log.e("TAG",  fileName + " not found in the assets folder.");
+        } catch (IOException e) {
+            //error message logged to the LogCat
+            Log.e("TAG", "IOException");
         }
 
         return json;
@@ -75,7 +81,8 @@ public class JSONUtility {
             }
 
         }catch(JSONException e){
-            e.printStackTrace();
+            //error message logged to the LogCat
+            Log.e("TAG",  "JSONException");
         }
         return Movie.getMovies();
     }
@@ -96,9 +103,7 @@ public class JSONUtility {
                 boolean empty = true;
                 boolean noTitle = false;
 
-                String[] headers = {"title", "year", "genre", "poster"};
                 String title = "", year = "", genre = "", posterId = "";
-                String[] variables = {title, year, genre, posterId};
 
 
                 //parse title
@@ -106,9 +111,15 @@ public class JSONUtility {
                     title = array.getJSONObject(i).getString("title");
                     if(title == "null" || title == null){
                         noTitle = true;
+                    }else{
+                        empty = false;
                     }
                 }catch(JSONException e){
                     empty = true;
+                    //error message logged to the LogCat
+                    Log.e("TAG",  "title not found");
+                    continue;
+
                 }
 
                 //parse year
@@ -117,11 +128,22 @@ public class JSONUtility {
                     //check if year value is a number
                     int y;
                     y = Integer.valueOf(array.getJSONObject(i).getString("year"));
+
+                    //check if year value is a valid number
                     if(y > 1900 && y <= 2025){
                         year = String.valueOf(array.getJSONObject(i).getString("year"));
                         empty = false;
                     }
-                }catch(JSONException | NumberFormatException e){
+                }catch(JSONException e){
+                    year = "";
+
+                    //error message logged to the LogCat
+                    Log.e("TAG",  "year not found");
+
+                }
+                catch(NumberFormatException e){
+                    //error message logged to the LogCat
+                    Log.e("TAG",  "invalid date");
                     year = "";
                 }
 
@@ -131,31 +153,40 @@ public class JSONUtility {
                     genre = array.getJSONObject(i).getString("genre");
                     empty = false;
                 }catch(JSONException e){
+                    //error message logged to the LogCat
+                    Log.e("TAG",  "genre not found");
+
                     genre = "";
                 }
 
-                //parse title
+                //parse poster
                 try{
                     posterId = array.getJSONObject(i).getString("poster");
                     empty = false;
                 }catch(JSONException e){
                     posterId = "";
+
+                    //error message logged to the LogCat
+                    Log.e("TAG",  "poster not found");
                 }
 
                 if(!empty && !noTitle){
                     //add movie to static movies arraylist
                     Movie.addMovie(new Movie(title, year, genre, posterId));
                 }
-                Log.i("TAG", "parseOnlyAllDetails:" + title + " : " + array.getJSONObject(i).getString("title"));
-                Log.i("TAG", "parseOnlyAllDetails:" + year + " : " + array.getJSONObject(i).getString("year"));
-                Log.i("TAG", "parseOnlyAllDetails:" + genre + " : " + array.getJSONObject(i).getString("genre"));
-                Log.i("TAG", "parseOnlyAllDetails:" + posterId + " : " + array.getJSONObject(i).getString("poster"));
+
+                //unit test
+                Log.i("TAG", "parseWithMissingDetails:" + "title" + " : " + title);
+                Log.i("TAG", "parseWithMissingDetails:" + "year" + " : " + year);
+                Log.i("TAG", "parseWithMissingDetails:" + "genre" + " : " + genre);
+                Log.i("TAG", "parseWithMissingDetails:" + "poster" + " : " + posterId);
 
 
             }
 
         }catch(JSONException e){
-            e.printStackTrace();
+            //error message logged to the LogCat
+            Log.e("TAG",  e.getLocalizedMessage());
         }
         return Movie.getMovies();
     }

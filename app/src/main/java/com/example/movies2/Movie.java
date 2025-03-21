@@ -9,6 +9,7 @@ public class Movie {
     private String posterId;
     private static ArrayList<Movie> movies = new ArrayList<>();
 
+    //constructor
     public Movie(String title, String year, String genre, String posterId){
         this.title = title;
         this.year = year;
@@ -16,6 +17,13 @@ public class Movie {
         this.posterId = posterId;
     }
 
+
+    public static void addMovie(Movie movie){
+        movies.add(movie);
+    }
+
+
+    //getters
     public String getTitle(){
         return title;
     }
@@ -30,8 +38,5 @@ public class Movie {
     }
     public static ArrayList<Movie> getMovies(){
         return movies;
-    }
-    public static void addMovie(Movie movie){
-        movies.add(movie);
     }
 }
