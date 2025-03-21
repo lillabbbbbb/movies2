@@ -1,50 +1,64 @@
 package com.example.movies2;
 
+import android.content.Context;
+import android.text.Layout;
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CustomAdapter { //source: https://developer.android.com/develop/ui/views/layout/recyclerview#java
-    private Movie[] localDataSet;
+import java.util.ArrayList;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
-        public ViewHolder(View view){
-            super(view);
-            textView = (TextView) view.findViewById(R.id.textView);
-        }
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>{ //source: https://developer.android.com/develop/ui/views/layout/recyclerview#java
+    Context context;
+    ArrayList<Movie> movies;
 
-        public TextView getTextView(){
-            return textView;
-        }
+    public CustomAdapter(Context context, ArrayList<Movie> movies){
+        this.context = context;
+        this.movies = movies;
+
+
     }
 
-    public CustomAdapter(Movie[] dataSet){
-        localDataSet = dataSet;
-    }
     // Create new views (invoked by the layout manager)
-
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    @NonNull
+    @Override
+    public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.text_row_item, parent, false);
 
-        return new ViewHolder(view);
+        return new CustomAdapter.MyViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
+    @Override
+    public void onBindViewHolder(@NonNull CustomAdapter.MyViewHolder holder, int position) {
+        holder.tvTitle.setText(movies.get(position).getTitle());
+        holder.tvYear.setText(String.valueOf(movies.get(position).getYear()));
+        holder.tvGenre.setText(movies.get(position).getGenre());
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
+    @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return movies.size();
+    }
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+        ImageView imageView;
+        TextView tvTitle, tvYear, tvGenre;
+        public MyViewHolder(@NonNull View itemView){
+            super(itemView);
+
+            imageView = itemView.findViewById(R.id.posterId);
+            tvTitle = itemView.findViewById(R.id.title);
+            tvYear = itemView.findViewById(R.id.year);
+            tvGenre = itemView.findViewById(R.id.genre);
+        }
     }
 }

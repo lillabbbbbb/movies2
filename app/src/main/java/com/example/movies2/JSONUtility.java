@@ -1,5 +1,7 @@
 package com.example.movies2;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,7 +19,7 @@ public class JSONUtility {
         try {
             // get JSONObject from JSON file
             JSONObject obj = new JSONObject(filePath);
-            while(){
+            while(true){
                 // get the corresponding data
                 String[] headers = {"title", "year", "genre", "poster"};
                 String title = "", year = "", genre = "", posterId = "";
@@ -33,9 +35,10 @@ public class JSONUtility {
                 }
 
                 //add movie to static movies arraylist
+                //Log.e("TAG", "parse: ", JSONException);
                 Movie.addMovie(new Movie(title, Integer.parseInt(year), genre, posterId));
             }
-            return Movie.getMovies();
+
 
 
         }catch(JSONException e){
