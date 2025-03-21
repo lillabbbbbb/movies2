@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Movie {
     private String title;
-    private int year;
+    private String year;
     private String genre;
     private String posterId;
     private static ArrayList<Movie> movies = new ArrayList<>();
 
-    public Movie(String title, int year, String genre, String posterId){
+    public Movie(String title, String year, String genre, String posterId){
         this.title = title;
         this.year = year;
         this.genre = genre;
@@ -19,7 +19,7 @@ public class Movie {
     public String getTitle(){
         return title;
     }
-    public int getYear(){
+    public String getYear(){
         return year;
     }
     public String getGenre(){

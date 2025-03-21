@@ -18,11 +18,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     Context context;
     ArrayList<Movie> movies;
 
+    //constructor
     public CustomAdapter(Context context, ArrayList<Movie> movies){
         this.context = context;
         this.movies = movies;
-
-
     }
 
     // Create new views (invoked by the layout manager)
@@ -38,13 +37,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.MyViewHolder holder, int position) {
+
+        //set the corresponding item texts
         holder.tvTitle.setText(movies.get(position).getTitle());
         holder.tvYear.setText(String.valueOf(movies.get(position).getYear()));
         holder.tvGenre.setText(movies.get(position).getGenre());
     }
 
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of the dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return movies.size();

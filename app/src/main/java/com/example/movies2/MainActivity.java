@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     //app components
     ArrayList<Movie> movies = new ArrayList<>();
     TextView viewTitle;
-    private final String JSON_FILE = "./assets/movies.json";
+    private final String JSON_FILE = "movies.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +32,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewTitle = findViewById(R.id.textView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
+        //read and parseOnlyAllDetails json file
+        String json = JSONUtility.readJSONFromAssets(this, JSON_FILE);
+        movies = JSONUtility.parseWithMissingDetails(json);
 
-        //read and parse json file
-        movies = JSONUtility.parse(JSON_FILE);
 
         //turn it into displayable list through the CustomAdapter
-
+        CustomAdapter adapter = new CustomAdapter(this, movies);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
